@@ -65,8 +65,9 @@ if [[ -n "${LAUNCHED_BY_RUNNER}" ]]; then
     # old versions split the callback name between awx_display and minimal, but new version just uses awx_display
     export ANSIBLE_STDOUT_CALLBACK=awx_display
 fi
-echo ${AWX_ISOLATED_DATA_DIR} > /runner/file 
+echo "isolated_data_dir: ${AWX_ISOLATED_DATA_DIR}" > /runner/file
 if [[ -d ${AWX_ISOLATED_DATA_DIR} ]]; then
+    echo "exists dir isolated " >> /runner/file
     if output=$(ansible-galaxy collection list --format json 2> /dev/null); then
         echo $output > ${AWX_ISOLATED_DATA_DIR}/collections.json
     fi
